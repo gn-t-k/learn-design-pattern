@@ -12,16 +12,11 @@ export class BookShelfIterator implements Iterator {
   }
 
   public hasNext(): boolean {
-    if (this.index < this.bookShelf.getLength()) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.index < this.bookShelf.getLength();
   }
 
   public next(): Book {
-    const book: Book = this.bookShelf.getBookAt(this.index);
-    this.index++;
+    const book: Book = this.bookShelf.getBookAt(this.index++);
     return book;
   }
 }

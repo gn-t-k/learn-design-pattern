@@ -3,12 +3,13 @@ import { Book } from 'iterator/book';
 import { Iterator } from 'iterator/iterator';
 
 describe('Iterator pattern', () => {
-  test('aaa', () => {
-    const bookShelf = new BookShelf(4);
-    bookShelf.appendBook(new Book('Around the World in 80 Days'));
-    bookShelf.appendBook(new Book('Bible'));
-    bookShelf.appendBook(new Book('Cinderella'));
-    bookShelf.appendBook(new Book('Daddy-Long-Legs'));
+  const bookShelf = new BookShelf(4);
+  bookShelf.appendBook(new Book('Around the World in 80 Days'));
+  bookShelf.appendBook(new Book('Bible'));
+  bookShelf.appendBook(new Book('Cinderella'));
+  bookShelf.appendBook(new Book('Daddy-Long-Legs'));
+
+  test('iteratorによって本が取り出せる', () => {
     const it: Iterator = bookShelf.iterator();
 
     const books = [];

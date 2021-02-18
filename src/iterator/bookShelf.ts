@@ -16,8 +16,7 @@ export class BookShelf implements Aggregate {
   }
 
   public appendBook(book: Book): void {
-    this.books[this.last] = book;
-    this.last++;
+    this.books[this.last++] = book;
   }
 
   public getLength(): number {
