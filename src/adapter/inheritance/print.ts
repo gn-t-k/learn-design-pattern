@@ -1,4 +1,4 @@
 export interface Print {
-  printWeak: () => string;
-  printStrong: () => string;
+  printWeak(): string;
+  printStrong(): string;
 }
