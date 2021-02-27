@@ -1,9 +1,10 @@
 import { CharDisplay } from 'templateMethod/charDisplay';
 import { StringDisplay } from 'templateMethod/stringDisplay';
+import { AbstractDisplay } from './abstractDisplay';
 
 describe('templateMethod', () => {
   test('charDisplay', () => {
-    const charDisplay = new CharDisplay('H');
+    const charDisplay: AbstractDisplay = new CharDisplay('H');
     const actual = charDisplay.display();
     const expected = '<<HHHHH>>';
 
@@ -11,7 +12,7 @@ describe('templateMethod', () => {
   });
 
   test('stringDisplay', () => {
-    const stringDisplay = new StringDisplay('Hello, World');
+    const stringDisplay: AbstractDisplay = new StringDisplay('Hello, World');
     const actual = stringDisplay.display();
     const expected =
       '+------------+\n|Hello, World|\n|Hello, World|\n|Hello, World|\n|Hello, World|\n|Hello, World|\n+------------+\n';
