@@ -14,8 +14,14 @@ describe('templateMethod', () => {
   test('stringDisplay', () => {
     const stringDisplay: AbstractDisplay = new StringDisplay('Hello, World');
     const actual = stringDisplay.display();
-    const expected =
-      '+------------+\n|Hello, World|\n|Hello, World|\n|Hello, World|\n|Hello, World|\n|Hello, World|\n+------------+\n';
+    const expected = `+------------+
+|Hello, World|
+|Hello, World|
+|Hello, World|
+|Hello, World|
+|Hello, World|
++------------+
+`;
 
     expect(actual).toEqual(expected);
   });
