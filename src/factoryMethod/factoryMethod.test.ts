@@ -9,4 +9,9 @@ describe('Factory Method', () => {
   test('use', () => {
     expect(card.use()).toEqual('結城浩のカードを使います');
   });
+
+  test('owners', () => {
+    const owners = (factory as IDCardFactory).getOwners();
+    expect(owners).toEqual(['結城浩']);
+  });
 });
