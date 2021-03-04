@@ -120,4 +120,4 @@ IDCardのインスタンスを生成するIDCardFactory。生成したIDCardの�
 
 getOwnersをテストするためにfactoryを型アサーション使って`IDCardFactory`にした。`Factory`のままだと`getOwners`が実装されてなくて使えないので。
 
-あと、Javaだとpackageというのがあるから、package外からnewできないみたいなのができるっぽいが、TypeScriptだとそういうスコープはないのだろうか。
+あと、Javaだとpackageというのがあるから、package外からnewできないみたいなのができるっぽいけど、TypeScriptだとそういうスコープはないのだろうか。
