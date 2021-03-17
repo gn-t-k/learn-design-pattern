@@ -5,6 +5,6 @@ export class ListLink extends Link {
     super(caption, url);
   }
   public makeHTML(): string {
-    return `<li><a href=\"${this.url}\">${this.caption}</a></li>\n`;
+    return `<li><a href=\"${this.url}\">${this.caption}</a></li>`;
   }
 }
