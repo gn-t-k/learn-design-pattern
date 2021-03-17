@@ -7,15 +7,15 @@ export class ListTray extends Tray {
   }
   public makeHTML(): string {
     const html: string[] = [];
-    html.push('<li>\n');
-    html.push(`${this.caption}\n`);
-    html.push('<ul>\n');
+    html.push('<li>');
+    html.push(`${this.caption}`);
+    html.push('<ul>');
     this.tray.map((item: Item) => {
       html.push(item.makeHTML());
     });
-    html.push('</ul>\n');
-    html.push('</li>\n');
+    html.push('</ul>');
+    html.push('</li>');
 
-    return html.join('');
+    return html.join('\n');
   }
 }

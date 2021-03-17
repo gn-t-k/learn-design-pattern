@@ -11,8 +11,5 @@ export abstract class Page {
   public add(item: Item): void {
     this.content.push(item);
   }
-  public output(): string {
-    return `${this.title}を作成しました`;
-  }
   public abstract makeHTML(): string;
 }
