@@ -2,7 +2,7 @@ import { Link } from 'abstractFactory/factory/link';
 import { Tray } from 'abstractFactory/factory/tray';
 import { Page } from 'abstractFactory/factory/page';
 
-export type FactoryType = 'ListFactory' | 'TableFactory';
+type FactoryType = 'ListFactory' | 'TableFactory';
 
 export abstract class Factory {
   public static getFactory(className: FactoryType): Factory {
