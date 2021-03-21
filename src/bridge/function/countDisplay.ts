@@ -1,5 +1,5 @@
-import { Display } from 'bridge/display';
-import { DisplayImpl } from 'bridge/displayImpl';
+import { Display } from 'bridge/function/display';
+import { DisplayImpl } from 'bridge/implementation/displayImpl';
 
 export class CountDisplay extends Display {
   public constructor(impl: DisplayImpl) {

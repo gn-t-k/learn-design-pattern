@@ -1,6 +1,7 @@
-import { Display } from 'bridge/display';
-import { StringDisplayImpl } from 'bridge/stringDisplayImpl';
-import { CountDisplay } from 'bridge/countDisplay';
+import { Display } from 'bridge/function/display';
+import { StringDisplayImpl } from 'bridge/implementation/stringDisplayImpl';
+import { CountDisplay } from 'bridge/function/countDisplay';
+import { generateRandomNumber } from './util/generateRandomNumber';
 
 describe('bridge', () => {
   test('display', () => {

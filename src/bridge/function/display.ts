@@ -1,4 +1,4 @@
-import { DisplayImpl } from 'bridge/displayImpl';
+import { DisplayImpl } from 'bridge/implementation/displayImpl';
 
 export class Display {
   private impl: DisplayImpl;
