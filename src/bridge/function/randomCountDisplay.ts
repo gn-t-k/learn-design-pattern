@@ -1,12 +1,13 @@
 import { CountDisplay } from 'bridge/function/countDisplay';
 import { DisplayImpl } from 'bridge/implementation/displayImpl';
+import { generateRandomNumber } from 'bridge/util/generateRandomNumber';
 
 export class RandomCountDisplay extends CountDisplay {
   public constructor(impl: DisplayImpl) {
     super(impl);
   }
   public randomDisplay(times: number): string {
-    const rundom = (times: number) => times;
-    return this.multiDisplay(rundom(times));
+    const random = generateRandomNumber(times);
+    return this.multiDisplay(random);
   }
 }

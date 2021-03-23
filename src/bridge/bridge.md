@@ -174,4 +174,13 @@ export class CountDisplay extends Display {
 
 ### 機能や実装を追加する
 
+#### ランダム回数表示する機能
+
+例えばランダム回数表示する機能を追加するときは、機能のクラス階層にクラスを追加する。
+
+randomCountDisplay.ts
+
+```typescript
+```
+
 ## 感想・考察
