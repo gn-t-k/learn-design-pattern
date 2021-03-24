@@ -2,7 +2,7 @@ import { Display } from 'bridge/function/display';
 import { StringDisplayImpl } from 'bridge/implementation/stringDisplayImpl';
 import { CountDisplay } from 'bridge/function/countDisplay';
 import { RandomCountDisplay } from 'bridge/function/randomCountDisplay';
-import { generateRandomNumber } from 'bridge/util/generateRandomNumber';
+import * as randomModule from 'bridge/util/generateRandomNumber';
 
 describe('bridge', () => {
   test('display', () => {
@@ -28,10 +28,7 @@ describe('bridge', () => {
   });
 
   test('random count display', () => {
-    jest.mock('bridge/util/generateRandomNumber');
-    const mockGenerateRandomValue = generateRandomNumber as jest.Mocked<
-      typeof generateRandomNumber
-    >;
+    jest.spyOn(randomModule, 'generateRandomNumber').mockReturnValue(3);
 
     const display: RandomCountDisplay = new RandomCountDisplay(
       new StringDisplayImpl('Hello, world'),
