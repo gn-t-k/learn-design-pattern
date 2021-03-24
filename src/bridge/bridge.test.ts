@@ -3,6 +3,8 @@ import { StringDisplayImpl } from 'bridge/implementation/stringDisplayImpl';
 import { CountDisplay } from 'bridge/function/countDisplay';
 import { RandomCountDisplay } from 'bridge/function/randomCountDisplay';
 import * as randomModule from 'bridge/util/generateRandomNumber';
+import { IncreaseDisplay } from 'bridge/function/increaseDisplay';
+import { CharDisplayImpl } from './implementation/charDisplayImpl';
 
 describe('bridge', () => {
   test('display', () => {
@@ -28,6 +30,7 @@ describe('bridge', () => {
   });
 
   test('random count display', () => {
+    // 毎回ランダムに表示されたらテストにならないので、テストのときは3回に固定
     jest.spyOn(randomModule, 'generateRandomNumber').mockReturnValue(3);
 
     const display: RandomCountDisplay = new RandomCountDisplay(
@@ -38,5 +41,29 @@ describe('bridge', () => {
 |Hello, world|
 |Hello, world|
 +------------+`);
+  });
+
+  test('print bar', () => {
+    const display1: IncreaseDisplay = new IncreaseDisplay(
+      new CharDisplayImpl('<', '*', '>'),
+      1,
+    );
+    expect(display1.increaseDisplay(5)).toEqual(`<>
+<*>
+<**>
+<***>
+<****>
+`);
+
+    const display2: IncreaseDisplay = new IncreaseDisplay(
+      new CharDisplayImpl('<', '-', '>'),
+      3,
+    );
+    expect(display2.increaseDisplay(5)).toEqual(`<>
+<--->
+<------>
+<--------->
+<------------>
+`);
   });
 });

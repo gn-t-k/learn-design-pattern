@@ -90,10 +90,10 @@ export class StringDisplayImpl extends DisplayImpl {
     this.width = string.length;
   }
   public rawOpen(): string {
-    return this.printLine();
+    return `${this.printLine()}\n`;
   }
   public rawPrint(): string {
-    return `|${this.string}|`;
+    return `|${this.string}|\n`;
   }
   public rawClose(): string {
     return this.printLine();
@@ -141,7 +141,7 @@ export class Display {
     string.push(this.open());
     string.push(this.print());
     string.push(this.close());
-    return string.join('\n');
+    return string.join('');
   }
 }
 ```
@@ -167,7 +167,7 @@ export class CountDisplay extends Display {
       string.push(this.print());
     }
     string.push(this.close());
-    return string.join('\n');
+    return string.join('');
   }
 }
 ```
@@ -176,11 +176,201 @@ export class CountDisplay extends Display {
 
 #### ランダム回数表示する機能
 
-例えばランダム回数表示する機能を追加するときは、機能のクラス階層にクラスを追加する。
+```typescript
+  test('random count display', () => {
+    // 毎回ランダムに表示されたらテストにならないので、テストのときは3回に固定
+    jest.spyOn(randomModule, 'generateRandomNumber').mockReturnValue(3);
+
+    const display: RandomCountDisplay = new RandomCountDisplay(
+      new StringDisplayImpl('Hello, world'),
+    );
+    expect(display.randomDisplay(5)).toEqual(`+------------+
+|Hello, world|
+|Hello, world|
+|Hello, world|
++------------+`);
+  });
+```
+
+例えば以上のようなランダム回数表示する機能を追加するときは、機能のクラス階層にクラスを追加する。
 
 randomCountDisplay.ts
 
 ```typescript
+import { CountDisplay } from 'bridge/function/countDisplay';
+import { DisplayImpl } from 'bridge/implementation/displayImpl';
+import { generateRandomNumber } from 'bridge/util/generateRandomNumber';
+
+export class RandomCountDisplay extends CountDisplay {
+  public constructor(impl: DisplayImpl) {
+    super(impl);
+  }
+  public randomDisplay(times: number): string {
+    const random = generateRandomNumber(times);
+    return this.multiDisplay(random);
+  }
+}
 ```
+
+#### バーを表示する機能
+
+```typescript
+  test('print bar', () => {
+    const display1: IncreaseDisplay = new IncreaseDisplay(
+      new CharDisplayImpl('<', '*', '>'),
+      1,
+    );
+    expect(display1.increaseDisplay(5)).toEqual(`<>
+<*>
+<**>
+<***>
+<****>
+`);
+
+    const display2: IncreaseDisplay = new IncreaseDisplay(
+      new CharDisplayImpl('<', '-', '>'),
+      3,
+    );
+    expect(display2.increaseDisplay(5)).toEqual(`<>
+<--->
+<------>
+<--------->
+<------------>
+`);
+  });
+```
+
+以上のように、長さと段数を指定してバーを表示させる機能を作る場合、`DisplayImpl`を使った新しい実装のクラスと`CountDisplay`を使った新しい機能のクラスを用意すれば実現できる。
+
+CharDisplayImpl.ts
+
+```typescript
+import { DisplayImpl } from 'bridge/implementation/displayImpl';
+
+export class CharDisplayImpl extends DisplayImpl {
+  private head: string;
+  private body: string;
+  private foot: string;
+  public constructor(head: string, body: string, foot: string) {
+    super();
+    this.head = head;
+    this.body = body;
+    this.foot = foot;
+  }
+  public rawOpen(): string {
+    return this.head;
+  }
+  public rawPrint(): string {
+    return this.body;
+  }
+  public rawClose(): string {
+    return `${this.foot}\n`;
+  }
+}
+```
+
+`StringDisplayImpl`が行単位でrawOpen/rawPrint/rawCloseを実装していたのに対して、こちらは文字単位でそれらを実装している。
+
+IncreaseDisplay.ts
+
+```typescript
+import { DisplayImpl } from 'bridge/implementation/displayImpl';
+import { CountDisplay } from './countDisplay';
+
+export class IncreaseDisplay extends CountDisplay {
+  private step: number;
+  public constructor(impl: DisplayImpl, step: number) {
+    super(impl);
+    this.step = step;
+  }
+  public increaseDisplay(level: number): string {
+    const string = [];
+    let count = 0;
+    for (let i = 0; i < level; i++) {
+      string.push(this.multiDisplay(count));
+      count += this.step;
+    }
+
+    return string.join('');
+  }
+}
+```
+
+`CountDisplay`に、長さを指定して表示するメソッド`increaseDisplay`を追加している。
+
+### 機能・実装を追加していった結果
+
+機能・実装を追加していった結果、以下のようなクラス図ができあがった。
+
+```plantuml
+@startuml
+skinparam packageStyle rectangle
+
+package function {
+  Class Display {
+    -impl
+    --
+    +open
+    +print
+    +close
+    +display
+  }
+
+  Class CountDisplay {
+    --
+    +multiDisplay
+  }
+
+  Class IncreaseDisplay {
+    -step
+    --
+    +increaseDisplay
+  }
+
+  Class RandomCountDisplay {
+    --
+    +randomDisplay
+  }
+}
+
+package implementation {
+  Abstract DisplayImpl {
+    --
+    +rawOpen
+    +rawPrint
+    +rawClose
+  }
+
+  Class StringDisplayImpl {
+    -string
+    -width
+    --
+    +rawOpen
+    +rawPrint
+    +rawClose
+    -printLine
+  }
+
+  Class CharDisplayImpl {
+    -head
+    -body
+    -foot
+    ---
+    +rawOpen
+    +rawPrint
+    +rawClose
+  }
+}
+
+Display <|-- CountDisplay
+CountDisplay <|-- IncreaseDisplay
+CountDisplay <|-- RandomCountDisplay
+DisplayImpl <--o Display
+DisplayImpl <|-- StringDisplayImpl
+DisplayImpl <|-- CharDisplayImpl
+@enduml
+```
+
+右側にある機能のクラス階層、左側に実装のクラス階層、そしてそれらをつなぐブリッジができていることがわかる。
 
 ## 感想・考察

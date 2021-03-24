@@ -12,6 +12,6 @@ export class CountDisplay extends Display {
       string.push(this.print());
     }
     string.push(this.close());
-    return string.join('\n');
+    return string.join('');
   }
 }

@@ -15,6 +15,6 @@ export class IncreaseDisplay extends CountDisplay {
       count += this.step;
     }
 
-    return string.join('\n');
+    return string.join('');
   }
 }

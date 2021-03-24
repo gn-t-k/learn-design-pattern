@@ -19,6 +19,6 @@ export class Display {
     string.push(this.open());
     string.push(this.print());
     string.push(this.close());
-    return string.join('\n');
+    return string.join('');
   }
 }

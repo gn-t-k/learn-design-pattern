@@ -9,10 +9,10 @@ export class StringDisplayImpl extends DisplayImpl {
     this.width = string.length;
   }
   public rawOpen(): string {
-    return this.printLine();
+    return `${this.printLine()}\n`;
   }
   public rawPrint(): string {
-    return `|${this.string}|`;
+    return `|${this.string}|\n`;
   }
   public rawClose(): string {
     return this.printLine();
